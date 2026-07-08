@@ -88,6 +88,7 @@ enum TransactionStatus {
   successful, 
   pending, 
   failed,
+  reversed,
   unknown;
 
   static TransactionStatus fromString(String value) {
