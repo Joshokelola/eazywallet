@@ -1,5 +1,6 @@
 import 'package:eazywallet/core/routing/routes.dart';
 import 'package:eazywallet/features/home/presentation/screens/dashboard_page.dart';
+import 'package:eazywallet/features/transactions/presentation/screens/report_transaction_page.dart';
 import 'package:eazywallet/features/transactions/presentation/screens/transaction_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -21,6 +22,14 @@ final router = GoRouter(
           builder: (context, state) {
             return TransactionDetailsPage();
           },
+          routes: [
+            GoRoute(
+              path: AppRoutes.reportTransaction,
+              builder: (context, state) {
+                return ReportTransactionPage();
+              },
+            ),
+          ],
         ),
       ],
     ),
