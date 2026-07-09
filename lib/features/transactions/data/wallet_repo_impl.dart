@@ -5,14 +5,14 @@ import 'package:eazywallet/features/transactions/domain/transaction_model.dart';
 import 'package:eazywallet/features/transactions/domain/user_model.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 
-class MockWalletRepository implements WalletRepository {
-  MockWalletRepository({
+class WalletRepositoryImpl implements WalletRepository {
+  WalletRepositoryImpl({
     Duration? networkDelay,
     Random? random,
     this.forceDashboardError = false,
     this.forceServerError = false,
-  })  : networkDelay = networkDelay ?? const Duration(seconds: 1),
-        random = random ?? Random();
+  }) : networkDelay = networkDelay ?? const Duration(seconds: 1),
+       random = random ?? Random();
 
   final Duration networkDelay;
   final Random random;
@@ -27,7 +27,7 @@ class MockWalletRepository implements WalletRepository {
   static const double randomServerFailureChance = 0.08;
 
   int pinAttempts = 0;
-  
+
   @override
   bool get isPinLocked => pinAttempts >= maxPinAttempts;
 

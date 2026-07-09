@@ -1,7 +1,7 @@
 import 'package:eazywallet/core/routing/routes.dart';
 import 'package:eazywallet/core/utils/formatter.dart';
 import 'package:eazywallet/features/transactions/application/transaction_details_store.dart';
-import 'package:eazywallet/features/transactions/data/mock_wallet_repo.dart';
+import 'package:eazywallet/features/transactions/data/wallet_repo_impl.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 import 'package:eazywallet/features/transactions/presentation/widgets/status_badge.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class TransactionDetailsPage extends StatefulWidget {
 }
 
 class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
-  final WalletRepository walletRepository = MockWalletRepository();
+  final WalletRepository walletRepository = WalletRepositoryImpl();
   late final TransactionDetailsStore store = TransactionDetailsStore(
     walletRepository,
     widget.transactionId,
@@ -79,11 +79,21 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: Colors.redAccent,
+                    ),
                     const SizedBox(height: 12),
-                    Text(store.errorMessage.value!, textAlign: TextAlign.center),
+                    Text(
+                      store.errorMessage.value!,
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: store.load, child: const Text('Try again')),
+                    ElevatedButton(
+                      onPressed: store.load,
+                      child: const Text('Try again'),
+                    ),
                   ],
                 ),
               ),
@@ -102,7 +112,10 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: Text(transaction.title, style: Theme.of(context).textTheme.headlineSmall),
+                      child: Text(
+                        transaction.title,
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
                     ),
                     StatusBadge(status: transaction.status),
                   ],
@@ -115,7 +128,10 @@ class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
                 detailRow('Direction', transaction.direction.name),
                 detailRow('Date', formatDate(transaction.date)),
                 detailRow('Description', transaction.description),
-                detailRow('Report Status', transaction.hasActiveReport ? 'Reported' : 'Not reported'),
+                detailRow(
+                  'Report Status',
+                  transaction.hasActiveReport ? 'Reported' : 'Not reported',
+                ),
                 const SizedBox(height: 32),
                 if (store.canReport.value)
                   SizedBox(

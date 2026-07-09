@@ -1,6 +1,6 @@
 import 'package:eazywallet/features/transactions/application/pin_store.dart';
 import 'package:eazywallet/features/transactions/application/report_form_store.dart';
-import 'package:eazywallet/features/transactions/data/mock_wallet_repo.dart';
+import 'package:eazywallet/features/transactions/data/wallet_repo_impl.dart';
 import 'package:eazywallet/features/transactions/domain/report_transaction_model.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 import 'package:eazywallet/features/transactions/presentation/widgets/pin_confirmation_sheet.dart';
@@ -17,8 +17,11 @@ class ReportTransactionPage extends StatefulWidget {
 }
 
 class _ReportTransactionPageState extends State<ReportTransactionPage> {
-  final WalletRepository walletRepository = MockWalletRepository();
-  late final ReportFormStore formStore = ReportFormStore(walletRepository, widget.transactionId);
+  final WalletRepository walletRepository = WalletRepositoryImpl();
+  late final ReportFormStore formStore = ReportFormStore(
+    walletRepository,
+    widget.transactionId,
+  );
   late final PinStore pinStore = PinStore(walletRepository);
 
   Future<void> handleSubmit() async {
@@ -33,9 +36,9 @@ class _ReportTransactionPageState extends State<ReportTransactionPage> {
     }
 
     if (formStore.errorMessage.value != null && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(formStore.errorMessage.value!)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(formStore.errorMessage.value!)));
     }
   }
 
@@ -54,25 +57,38 @@ class _ReportTransactionPageState extends State<ReportTransactionPage> {
                 const SizedBox(height: 8),
                 DropdownButtonFormField<ReportReason>(
                   value: formStore.reason.value,
-                  decoration: const InputDecoration(border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
                   hint: const Text('Select a reason'),
                   items: ReportReason.values
-                      .map((reason) => DropdownMenuItem(value: reason, child: Text(reason.label)))
+                      .map(
+                        (reason) => DropdownMenuItem(
+                          value: reason,
+                          child: Text(reason.label),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {
                     if (value != null) formStore.setReason(value);
                   },
                 ),
                 const SizedBox(height: 24),
-                Text('Description', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Description',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: 8),
                 TextFormField(
                   maxLines: 5,
                   maxLength: ReportFormStore.maxDescriptionLength,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Describe what went wrong (minimum 20 characters)',
-                    errorText: formStore.description.value.isNotEmpty && !formStore.isDescriptionValid.value
+                    hintText:
+                        'Describe what went wrong (minimum 20 characters)',
+                    errorText:
+                        formStore.description.value.isNotEmpty &&
+                            !formStore.isDescriptionValid.value
                         ? 'Description must be between ${ReportFormStore.minDescriptionLength} and ${ReportFormStore.maxDescriptionLength} characters'
                         : null,
                   ),
@@ -82,14 +98,18 @@ class _ReportTransactionPageState extends State<ReportTransactionPage> {
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
-                    onPressed: formStore.isValid.value && !formStore.isSubmitting.value
+                    onPressed:
+                        formStore.isValid.value && !formStore.isSubmitting.value
                         ? handleSubmit
                         : null,
                     child: formStore.isSubmitting.value
                         ? const SizedBox(
                             height: 20,
                             width: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
                           )
                         : const Text('Submit Report'),
                   ),
