@@ -59,6 +59,34 @@ class TransactionModel {
     );
   }
 
+  TransactionModel copyWith({
+    String? id,
+    String? reference,
+    String? title,
+    double? amount,
+    double? fee,
+    TransactionType? type,
+    TransactionStatus? status,
+    TransactionDirection? direction,
+    String? description,
+    DateTime? date,
+    bool? hasActiveReport,
+  }) {
+    return TransactionModel(
+      id: id ?? this.id,
+      reference: reference ?? this.reference,
+      title: title ?? this.title,
+      amount: amount ?? this.amount,
+      fee: fee ?? this.fee,
+      type: type ?? this.type,
+      status: status ?? this.status,
+      direction: direction ?? this.direction,
+      description: description ?? this.description,
+      date: date ?? this.date,
+      hasActiveReport: hasActiveReport ?? this.hasActiveReport,
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory TransactionModel.fromJson(String source) => 
