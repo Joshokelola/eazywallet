@@ -11,27 +11,60 @@ class TransactionListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
     final isCredit = transaction.direction == TransactionDirection.credit;
-    final amountColor = isCredit ? Colors.green : Colors.red;
+    final amountColor = isCredit ? const Color(0xFF0C6B58) : colorScheme.error;
     final amountPrefix = isCredit ? '+' : '-';
 
     return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
+      elevation: 0,
+      margin: const EdgeInsets.only(bottom: 8),
+      color: colorScheme.surfaceContainerLow,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: colorScheme.outlineVariant.withOpacity(0.4)),
+      ),
+      child: InkWell(
         onTap: onTap,
-        title: Text(transaction.title),
-        subtitle: Text('${formatDate(transaction.date)} · ${transaction.reference}'),
-        trailing: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              '$amountPrefix${formatAmount(transaction.amount)}',
-              style: TextStyle(color: amountColor, fontWeight: FontWeight.bold),
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            title: Text(
+              transaction.title,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w600,
+                color: colorScheme.onSurface,
+              ),
             ),
-            const SizedBox(height: 4),
-            StatusBadge(status: transaction.status),
-          ],
+            subtitle: Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                '${formatDate(transaction.date)} · ${transaction.reference}',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+            trailing: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '$amountPrefix${formatAmount(transaction.amount)}',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    color: amountColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                StatusBadge(status: transaction.status),
+              ],
+            ),
+          ),
         ),
       ),
     );

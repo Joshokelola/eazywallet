@@ -35,6 +35,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('EazyWallet'),
@@ -55,7 +58,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
+                    Icon(Icons.error_outline, size: 48, color: colorScheme.error),
                     const SizedBox(height: 12),
                     Text(store.errorMessage.value!, textAlign: TextAlign.center),
                     const SizedBox(height: 16),
@@ -75,27 +78,64 @@ class _DashboardPageState extends State<DashboardPage> {
               children: [
                 if (user != null)
                   Card(
+                    elevation: 0,
+                    color: colorScheme.primaryContainer,
                     child: Padding(
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Welcome back,', style: Theme.of(context).textTheme.bodyMedium),
-                          Text(user.name, style: Theme.of(context).textTheme.headlineSmall),
-                          const SizedBox(height: 16),
-                          Text('Wallet Balance', style: Theme.of(context).textTheme.bodySmall),
+                          Text(
+                            'Welcome back,',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onPrimaryContainer.withOpacity(0.7),
+                            ),
+                          ),
+                          Text(
+                            user.name,
+                            style: theme.textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Wallet Balance',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: colorScheme.onPrimaryContainer.withOpacity(0.7),
+                            ),
+                          ),
                           Text(
                             formatAmount(user.walletBalance),
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: theme.textTheme.headlineMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: colorScheme.onPrimaryContainer,
+                            ),
                           ),
-                          const SizedBox(height: 8),
-                          Chip(label: Text(user.kycLevel)),
+                          const SizedBox(height: 12),
+                          Theme(
+                            data: theme.copyWith(canvasColor: Colors.transparent),
+                            child: RawChip(
+                              label: Text(user.kycLevel),
+                              labelStyle: theme.textTheme.bodySmall?.copyWith(
+                                color: colorScheme.onSecondaryContainer,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              backgroundColor: colorScheme.secondaryContainer,
+                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
                 const SizedBox(height: 24),
-                Text('Recent Transactions', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'Recent Transactions',
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 if (store.isEmpty.value)
                   const Padding(
