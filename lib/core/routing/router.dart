@@ -20,13 +20,13 @@ final router = GoRouter(
         GoRoute(
           path: AppRoutes.transactionDetails,
           builder: (context, state) {
-            return TransactionDetailsPage();
+            return TransactionDetailsPage(transactionId: state.extra as String,);
           },
           routes: [
             GoRoute(
               path: AppRoutes.reportTransaction,
               builder: (context, state) {
-                return ReportTransactionPage();
+                return ReportTransactionPage(transactionId: state.extra as String,);
               },
             ),
           ],
