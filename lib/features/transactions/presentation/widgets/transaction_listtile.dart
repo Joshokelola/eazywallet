@@ -36,16 +36,17 @@ class TransactionListTile extends StatelessWidget {
             title: Text(
               transaction.title,
               style: theme.textTheme.bodyLarge?.copyWith(
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
                 color: colorScheme.onSurface,
               ),
             ),
             subtitle: Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                '${formatDate(transaction.date)} · ${transaction.reference}',
+                formatDate(transaction.date),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w300
                 ),
               ),
             ),

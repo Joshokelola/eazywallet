@@ -41,13 +41,10 @@ class _DashboardPageState extends State<DashboardPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('EazyWallet'),
-        actions: [
-          IconButton(onPressed: store.refresh, icon: const Icon(Icons.refresh)),
-        ],
       ),
       body: Observer(
         builder: (context) {
-          if (store.isLoading.value && store.user.value == null) {
+          if (store.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
 
@@ -58,11 +55,21 @@ class _DashboardPageState extends State<DashboardPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.error_outline, size: 48, color: colorScheme.error),
+                    Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: colorScheme.error,
+                    ),
                     const SizedBox(height: 12),
-                    Text(store.errorMessage.value!, textAlign: TextAlign.center),
+                    Text(
+                      store.errorMessage.value!,
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 16),
-                    ElevatedButton(onPressed: store.refresh, child: const Text('Try again')),
+                    ElevatedButton(
+                      onPressed: store.refresh,
+                      child: const Text('Try again'),
+                    ),
                   ],
                 ),
               ),
@@ -88,7 +95,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           Text(
                             'Welcome back,',
                             style: theme.textTheme.bodyMedium?.copyWith(
-                              color: colorScheme.onPrimaryContainer.withOpacity(0.7),
+                              color: colorScheme.onPrimaryContainer.withOpacity(
+                                0.7,
+                              ),
                             ),
                           ),
                           Text(
@@ -102,7 +111,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           Text(
                             'Wallet Balance',
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color: colorScheme.onPrimaryContainer.withOpacity(0.7),
+                              color: colorScheme.onPrimaryContainer.withOpacity(
+                                0.7,
+                              ),
                             ),
                           ),
                           Text(
@@ -114,7 +125,9 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           const SizedBox(height: 12),
                           Theme(
-                            data: theme.copyWith(canvasColor: Colors.transparent),
+                            data: theme.copyWith(
+                              canvasColor: Colors.transparent,
+                            ),
                             child: RawChip(
                               label: Text(user.kycLevel),
                               labelStyle: theme.textTheme.bodySmall?.copyWith(
@@ -122,7 +135,9 @@ class _DashboardPageState extends State<DashboardPage> {
                                 fontWeight: FontWeight.w600,
                               ),
                               backgroundColor: colorScheme.secondaryContainer,
-                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                              ),
                             ),
                           ),
                         ],
