@@ -1,7 +1,7 @@
 import 'package:eazywallet/core/routing/routes.dart';
 import 'package:eazywallet/core/utils/formatter.dart';
+import 'package:eazywallet/core/services/wallet_repository_provider.dart';
 import 'package:eazywallet/features/home/application/dashboard_store.dart';
-import 'package:eazywallet/features/transactions/data/wallet_repo_impl.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 import 'package:eazywallet/features/transactions/presentation/widgets/transaction_listtile.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  final WalletRepository walletRepository = WalletRepositoryImpl();
+  final WalletRepository walletRepository = sharedWalletRepository;
   late final DashboardStore store = DashboardStore(walletRepository);
 
   @override

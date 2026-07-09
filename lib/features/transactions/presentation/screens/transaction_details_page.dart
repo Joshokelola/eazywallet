@@ -1,7 +1,7 @@
 import 'package:eazywallet/core/routing/routes.dart';
 import 'package:eazywallet/core/utils/formatter.dart';
+import 'package:eazywallet/core/services/wallet_repository_provider.dart';
 import 'package:eazywallet/features/transactions/application/transaction_details_store.dart';
-import 'package:eazywallet/features/transactions/data/wallet_repo_impl.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 import 'package:eazywallet/features/transactions/presentation/widgets/status_badge.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class TransactionDetailsPage extends StatefulWidget {
 }
 
 class _TransactionDetailsPageState extends State<TransactionDetailsPage> {
-  final WalletRepository walletRepository = WalletRepositoryImpl();
+  final WalletRepository walletRepository = sharedWalletRepository;
   late final TransactionDetailsStore store = TransactionDetailsStore(
     walletRepository,
     widget.transactionId,

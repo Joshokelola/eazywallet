@@ -1,6 +1,6 @@
 import 'package:eazywallet/features/transactions/application/pin_store.dart';
 import 'package:eazywallet/features/transactions/application/report_form_store.dart';
-import 'package:eazywallet/features/transactions/data/wallet_repo_impl.dart';
+import 'package:eazywallet/core/services/wallet_repository_provider.dart';
 import 'package:eazywallet/features/transactions/domain/report_transaction_model.dart';
 import 'package:eazywallet/features/transactions/domain/wallet_repo.dart';
 import 'package:eazywallet/features/transactions/presentation/widgets/pin_confirmation_sheet.dart';
@@ -17,7 +17,7 @@ class ReportTransactionPage extends StatefulWidget {
 }
 
 class _ReportTransactionPageState extends State<ReportTransactionPage> {
-  final WalletRepository walletRepository = WalletRepositoryImpl();
+  final WalletRepository walletRepository = sharedWalletRepository;
   late final ReportFormStore formStore = ReportFormStore(
     walletRepository,
     widget.transactionId,
