@@ -27,7 +27,8 @@ class MockWalletRepository implements WalletRepository {
   static const double randomServerFailureChance = 0.08;
 
   int pinAttempts = 0;
-
+  
+  @override
   bool get isPinLocked => pinAttempts >= maxPinAttempts;
 
   final UserModel user = UserModel(

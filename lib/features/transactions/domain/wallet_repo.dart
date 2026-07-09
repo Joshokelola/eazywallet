@@ -16,4 +16,6 @@ abstract class WalletRepository {
   });
 
   Future<bool> verifyTransactionPin(String pin);
+
+  bool get isPinLocked;
 }
