@@ -28,7 +28,7 @@ Run tests with `flutter test`.
 
 ## 4. MobX state management approach
 
-Each feature uses a small store instead of a global app state. The dashboard store loads user + transactions, the details store loads one transaction, the report form store tracks the selected reason/description, and the PIN store manages verification state. UI widgets listen with `Observer` and only rebuild where needed.
+Each feature uses a small store. The dashboard store loads user + transactions, the details store loads one transaction, the report form store tracks the selected reason/description, and the PIN store manages verification state. UI widgets listen with `Observer` and only rebuild where needed.
 
 ## 5. Mock backend / simulated service
 
